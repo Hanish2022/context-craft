@@ -100,8 +100,13 @@ Claude loads this skill and:
    `scripts/compress.ts` as a deterministic check.
 3. Runs a generic version of this repo's own benchmark methodology
    (`scripts/compare.ts`) against the user's own scenarios.
-4. Optionally extends to a real-model comparison — but **never spends the
+4. Recommends a fix, or implements it if asked — then verifies the change by
+   re-running the same check from step 2/3, not just asserting it helped.
+5. Optionally extends to a real-model comparison — but **never spends the
    user's API budget without asking first**.
+
+It triggers automatically on relevant requests (no need to name it), or you
+can invoke it explicitly with `/contextcraft <what you want looked at>`.
 
 This has been evaluated end-to-end: verified to trigger correctly on
 realistic indirect prompts, to correctly decline unrelated requests, to never
@@ -123,6 +128,7 @@ benchmark/        the zero-cost mechanical benchmark + the optional real-LLM eva
   reportLLM.ts       prints the real-model comparison table
 .claude/skills/contextcraft/   the packaged Claude Skill (see above)
 .claude-plugin/                plugin.json + marketplace.json, so the skill installs as a plugin
+commands/contextcraft.md       explicit /contextcraft slash-command entry point
 ```
 
 ## Installing the ContextCraft skill
