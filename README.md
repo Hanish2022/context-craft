@@ -15,7 +15,7 @@ small, zero-cost, fully-tested context-selection engine (naive truncation:
 /plugin install contextcraft --marketplace Hanish2022/context-craft
 ```
 Then just describe your problem naturally — no need to name the skill. Or
-invoke it explicitly: `/contextcraft <what to look at>`.
+invoke it explicitly: `/contextcraft:audit <what to look at>`.
 
 ### Kiro CLI
 ```bash
@@ -36,7 +36,7 @@ git clone git@github.com:Hanish2022/context-craft.git
 No need to restart — switch to ContextCraft mid-session:
 
 **Claude Code**: just describe the problem in the same chat, or type
-`/contextcraft <what to look at>`. It auto-triggers on relevant requests too.
+`/contextcraft:audit <what to look at>`. It auto-triggers on relevant requests too.
 
 **Kiro CLI**: type `/agent swap contextcraft` in the chat, then ask your
 question normally. Switch back anytime with `/agent swap kiro_default`.
