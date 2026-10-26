@@ -108,6 +108,16 @@ Claude loads this skill and:
 It triggers automatically on relevant requests (no need to name it), or you
 can invoke it explicitly with `/contextcraft <what you want looked at>`.
 
+**Using a different AI coding agent (Codex, Cursor, etc.)?** `AGENTS.md` at the
+repo root has the same workflow and rules, written against the
+[open AGENTS.md standard](https://agents.md/) that those tools read natively.
+It's simpler than the Claude Skill above (always-loaded project context, not
+a conditionally-triggered skill), but points at the same scripts. I haven't
+been able to verify tool-specific skill directories like `.cursor/skills/` or
+`.codex/skills/` first-hand (sources disagree on the exact conventions), so
+I'm not claiming those work — `AGENTS.md` is the one I could actually confirm
+is a real, governed standard those tools read.
+
 This has been evaluated end-to-end: verified to trigger correctly on
 realistic indirect prompts, to correctly decline unrelated requests, to never
 modify the user's code, to hold up from a clean install in a brand-new
