@@ -31,6 +31,32 @@ git clone git@github.com:Hanish2022/context-craft.git
 `AGENTS.md` at the repo root carries the same instructions, via the open
 [AGENTS.md](https://agents.md/) standard those tools read natively.
 
+## Already have a chat open?
+
+No need to restart — switch to ContextCraft mid-session:
+
+**Claude Code**: just describe the problem in the same chat, or type
+`/contextcraft <what to look at>`. It auto-triggers on relevant requests too.
+
+**Kiro CLI**: type `/agent swap contextcraft` in the chat, then ask your
+question normally. Switch back anytime with `/agent swap kiro_default`.
+
+## Example
+
+Say your chat handler trims history like this:
+```js
+const trimmed = transcript.length > 4000 ? transcript.slice(-4000) : transcript
+```
+You ask: *"My support bot forgets the customer's subscription tier in long
+conversations — here's src/chatHandler.js, what's wrong?"*
+
+ContextCraft points at that exact line: `.slice(-4000)` keeps only the most
+recent text, so once the conversation grows past ~4000 characters, the tier
+mentioned at the start is the first thing silently dropped. It recommends
+pinning that fact outside the sliding window instead of trimming it away by
+recency — and, if you ask it to, runs `scripts/compare.ts` on your real data
+to show the fix actually keeps the fact vs. the naive version losing it.
+
 ### Working on the engine itself
 ```bash
 git clone git@github.com:Hanish2022/context-craft.git
