@@ -18,6 +18,36 @@ selection and history compression. Use its scripts to actually run the user's
 real data through it, rather than only reasoning about their code in the
 abstract.
 
+## Workflow
+
+The full loop is **diagnose → measure → recommend/implement → verify → report**,
+but only run the steps the request actually calls for -- a purely conceptual
+question doesn't need a script run, and a request that only asks for a
+diagnosis doesn't need you to rewrite anything. Use judgment per request:
+
+| User says | Do this |
+| --- | --- |
+| "My agent forgets earlier decisions." | Diagnose history truncation/compression (Step 1), then measure retention (Step 2). |
+| "My API prompts are too expensive." | Diagnose repeated/oversized context, measure actual token usage, identify concrete savings -- don't just suggest caching generically. |
+| "My RAG pipeline retrieves the right docs but answers poorly." | Diagnose how retrieved docs are selected, ordered, and fitted into the budget *after* retrieval -- not the retrieval step itself. |
+| "I'm hitting the context-window limit." | Calculate the real budget, find what's oversized, measure, then recommend a selection strategy. |
+| "Build me a context pipeline from scratch." | Skip straight to implement: generate it using this engine, with tests. |
+| "Explain what context engineering is." | Just explain it concisely. Don't run scripts for a question that isn't about their code. |
+| "Benchmark this using a real LLM." | Explain the cost and required credentials, then get explicit approval before any billable request (Step 5). |
+
+## Rules
+
+1. Never claim a token or cost saving you haven't actually measured (Step 2).
+2. Never silently drop a required fact because the budget is insufficient --
+   report it as infeasible, with the token math, not as a quiet omission.
+3. A model correctly declining to answer ("I don't know based on the given
+   context") when the context is genuinely incomplete is safe behavior, not a
+   failure of either strategy -- don't grade it as one.
+4. Don't rewrite the user's code just because this skill fired. Diagnose and
+   measure first; only touch their files if they ask you to implement the fix.
+5. Real-model benchmarking (Step 5) is optional and costs the user's own API
+   budget -- always get explicit approval before making a billable request.
+
 ## Step 1: Find the pipeline and diagnose it
 
 Read the code that builds the prompt or request sent to the model. Look
@@ -116,7 +146,30 @@ budget, no strategy can retain all of them, and that's not a bug -- report
 it as infeasible rather than a failure of either strategy (`compare.ts`
 already does this split automatically).
 
-## Step 3: Optional -- real model comparison
+## Step 3: Recommend, or implement if asked
+
+After Steps 1-2 you have a grounded diagnosis and mechanical evidence. Give the
+user a concrete, scoped recommendation (per Rule 4, don't go further
+uninvited): usually, adopt importance-weighted selection for their context
+assembly step, and keep compression disabled or conservative until they've
+tested it on their own critical facts.
+
+If the user asks you to actually implement the fix: use the engine's real API
+(`assembleContext`, `compressHistory` -- see `src/budget.ts` and
+`src/compression.ts` in this repo for the signatures) as the basis, scope the
+change to what Step 1 diagnosed, and call out any consequential change (e.g.
+changing what gets sent to the model in production) before making it, so the
+user can weigh in first.
+
+## Step 4: Verify
+
+If you changed anything in Step 3, don't just assert it helped -- rerun the
+relevant check from Step 2 (and Step 5, if you ran it) against the same data
+and compare before/after. Report plainly what improved, what regressed (if
+anything), and what's still unproven (e.g. "token usage dropped, but we
+haven't tested this against your production traffic shape").
+
+## Step 5: Optional -- real model comparison
 
 Steps 1-2 are mechanical: they prove what gets *selected*, not whether a
 model's *answer* actually improves. If the user has LLM API budget, extend
@@ -138,7 +191,7 @@ when the selected context is incomplete relative to what the question asks
 let a benchmark's grading logic count an honest abstention as equivalent to
 a wrong answer.
 
-## Step 4: Report findings
+## Step 6: Report findings
 
 Summarize for the user:
 1. What's wrong with their current pipeline (from Step 1), with file/line
@@ -146,12 +199,10 @@ Summarize for the user:
 2. The mechanical evidence (from Step 2): retention rates, and the
    order-randomization range that shows naive truncation's result isn't
    reliable.
-3. If you ran Step 3: whether real model answers actually changed.
-4. A concrete, scoped recommendation -- usually: adopt importance-weighted
-   selection for their context assembly step, keep it disabled or
-   conservative for compression until they've tested it on their own
-   critical facts, and treat token savings and answer-quality separately
-   (one does not imply the other).
+3. If you ran Step 5: whether real model answers actually changed.
+4. The recommendation or implementation from Step 3, and the before/after
+   from Step 4 if you implemented anything -- treat token savings and
+   answer-quality as separate claims (one does not imply the other).
 
 Don't recommend a dashboard, a vector database, or multi-provider support
 unless the user already has those needs -- this skill is about proving
