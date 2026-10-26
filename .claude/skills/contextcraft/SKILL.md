@@ -251,3 +251,9 @@ When asked to **pin**, or when Step 1's diagnosis is about this conversation:
    doesn't need Step 2's measurement to be worth doing. Offer the
    measurement separately, as evidence for *why* recency-based retention is
    risky in general, not as a precondition for pinning.
+
+This plugin also ships a `PreCompact` hook (`hooks/hooks.json`, manual
+`/compact` only -- never auto-compact, since blocking that can either do
+nothing visible or surface a real API error) that reminds the user to pin
+before compacting if no `SESSION_FACTS.md` exists yet for the project, once
+per project. You don't need to do anything for this to work; it's automatic.

@@ -41,6 +41,12 @@ No need to restart — switch to ContextCraft mid-session:
 **Kiro CLI**: type `/agent swap contextcraft` in the chat, then ask your
 question normally. Switch back anytime with `/agent swap kiro_default`.
 
+**Ask it to pin this session's facts** (branch, decisions, root-cause
+findings) so they survive Claude Code's `/compact` instead of depending on
+recency. On Claude Code, a bundled `PreCompact` hook also reminds you to do
+this automatically, once per project, the first time you run `/compact`
+without a `SESSION_FACTS.md` already there.
+
 ## Example
 
 Say your chat handler trims history like this:
