@@ -1,0 +1,21 @@
+{
+  "decision-db": ["postgresql", "postgres"],
+  "rate-limit-doc": ["100 requests", "429", "rate limit"],
+  "incident-cause": ["connection pool", "retry loop"],
+  "incident-resolution": ["patched", "connection pool limits", "deployed"],
+  "complaint": ["tax breakdown", "line-item", "line item", "invoices"],
+  "promise": ["csv", "end of this quarter", "quarter"],
+  "upgrade-target": ["4.2.0", "v4.2"],
+  "upgrade-reason": ["token validation bypass", "vulnerability"],
+  "sla-terms": ["99.95", "uptime"],
+  "sla-effective-date": ["next billing cycle", "billing cycle"],
+  "blocker": ["crash", "push-notification", "push notification", "ios 18"],
+  "owner": ["mobile platform team", "end of week"],
+  "pricing-change": ["$29", "$35", "29 to 35", "29 to $35"],
+  "pricing-start-date": ["next month", "grandfathered"],
+  "final-vendor": ["google cloud", "gcp"],
+  "escalation-path": ["incident commander", "five minutes", "5 minutes"],
+  "step-1": ["zero replicas", "scale down", "scale the new deployment"],
+  "step-2": ["rollback command", "previous stable", "container image"],
+  "step-3": ["health check", "post-rollback"]
+}

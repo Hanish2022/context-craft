@@ -1,0 +1,22 @@
+{
+  "name": "context-engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "bench": "tsx benchmark/run.ts",
+    "bench:report": "tsx benchmark/report.ts",
+    "bench:llm": "tsx benchmark/runLLMEval.ts",
+    "bench:llm:report": "tsx benchmark/reportLLM.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^5.0.5"
+  },
+  "dependencies": {
+    "js-tiktoken": "^1.0.15"
+  }
+}

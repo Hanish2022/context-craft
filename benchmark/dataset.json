@@ -1,0 +1,507 @@
+[
+  {
+    "id": "q1",
+    "query": "What database did we decide to use for the new service?",
+    "inputBudget": 100,
+    "reservedTokens": 20,
+    "requiredFactIds": [
+      "decision-db"
+    ],
+    "contextPool": [
+      {
+        "id": "aside-1",
+        "content": "Someone mentioned the office coffee machine is broken again and maintenance has been notified.",
+        "sourceType": "chat",
+        "importance": 0.05,
+        "relevanceScore": 0.05,
+        "timestamp": 9000000
+      },
+      {
+        "id": "aside-2",
+        "content": "Reminder: the team lunch on Friday has moved to the cafe down the street instead of the usual spot.",
+        "sourceType": "chat",
+        "importance": 0.1,
+        "relevanceScore": 0.05,
+        "timestamp": 9500000
+      },
+      {
+        "id": "aside-3",
+        "content": "A new intern is joining the design team next Monday and will need a laptop set up.",
+        "sourceType": "chat",
+        "importance": 0.1,
+        "relevanceScore": 0.05,
+        "timestamp": 9800000
+      },
+      {
+        "id": "aside-4",
+        "content": "The quarterly all-hands has been rescheduled to next Thursday afternoon instead of Wednesday morning.",
+        "sourceType": "chat",
+        "importance": 0.15,
+        "relevanceScore": 0.05,
+        "timestamp": 9900000
+      },
+      {
+        "id": "decision-db",
+        "content": "Team decision: we will use PostgreSQL for the new service, chosen for its JSON support and the team's existing operational familiarity.",
+        "sourceType": "decision-log",
+        "importance": 0.95,
+        "relevanceScore": 0.9,
+        "timestamp": 0
+      }
+    ]
+  },
+  {
+    "id": "q2",
+    "query": "What is the rate limit for the public API?",
+    "inputBudget": 75,
+    "reservedTokens": 15,
+    "requiredFactIds": [
+      "rate-limit-doc"
+    ],
+    "contextPool": [
+      {
+        "id": "unrelated-doc-1",
+        "content": "Our billing cycle runs from the 1st to the last day of each calendar month for all enterprise accounts.",
+        "sourceType": "docs",
+        "importance": 0.2,
+        "relevanceScore": 0.1,
+        "timestamp": 500000
+      },
+      {
+        "id": "unrelated-doc-2",
+        "content": "The support team's average first-response time target is four business hours for standard tier customers.",
+        "sourceType": "docs",
+        "importance": 0.2,
+        "relevanceScore": 0.1,
+        "timestamp": 600000
+      },
+      {
+        "id": "unrelated-doc-3",
+        "content": "New employee onboarding includes a mandatory security training module within the first week.",
+        "sourceType": "docs",
+        "importance": 0.15,
+        "relevanceScore": 0.05,
+        "timestamp": 700000
+      },
+      {
+        "id": "rate-limit-doc",
+        "content": "The public API enforces a rate limit of 100 requests per minute per API key, returning HTTP 429 when exceeded.",
+        "sourceType": "docs",
+        "importance": 0.9,
+        "relevanceScore": 0.95,
+        "timestamp": 1000
+      }
+    ]
+  },
+  {
+    "id": "q3",
+    "query": "Why did the payment service outage happen last week and is it resolved?",
+    "inputBudget": 80,
+    "reservedTokens": 25,
+    "requiredFactIds": [
+      "incident-cause",
+      "incident-resolution"
+    ],
+    "contextPool": [
+      {
+        "id": "old-chat-1",
+        "content": "Earlier in the week someone asked whether the office parking garage would be repaved this month.",
+        "sourceType": "chat",
+        "importance": 0.05,
+        "relevanceScore": 0.05,
+        "timestamp": 100000
+      },
+      {
+        "id": "old-chat-2",
+        "content": "A reminder went out about updating emergency contact information in the HR portal.",
+        "sourceType": "chat",
+        "importance": 0.1,
+        "relevanceScore": 0.05,
+        "timestamp": 150000
+      },
+      {
+        "id": "old-chat-3",
+        "content": "There was a brief discussion about which conference room to book for the design review.",
+        "sourceType": "chat",
+        "importance": 0.1,
+        "relevanceScore": 0.05,
+        "timestamp": 200000
+      },
+      {
+        "id": "incident-cause",
+        "content": "Root cause of the payment outage: a database connection pool exhaustion triggered by a misconfigured retry loop in the checkout service.",
+        "sourceType": "incident-report",
+        "importance": 0.95,
+        "relevanceScore": 0.9,
+        "timestamp": 2000
+      },
+      {
+        "id": "incident-resolution",
+        "content": "Resolution: the retry loop was patched and connection pool limits were raised; the fix has been deployed and verified in production.",
+        "sourceType": "incident-report",
+        "importance": 0.9,
+        "relevanceScore": 0.9,
+        "timestamp": 3000
+      }
+    ]
+  },
+  {
+    "id": "q4",
+    "query": "What was the customer's original complaint and what did we promise them?",
+    "inputBudget": 65,
+    "reservedTokens": 20,
+    "requiredFactIds": [
+      "complaint",
+      "promise"
+    ],
+    "contextPool": [
+      {
+        "id": "filler-1",
+        "content": "The support agent greeted the customer and confirmed their account email on file.",
+        "sourceType": "support-ticket",
+        "importance": 0.1,
+        "relevanceScore": 0.1,
+        "timestamp": 500000
+      },
+      {
+        "id": "filler-2",
+        "content": "The customer thanked the agent for their time at the end of the call.",
+        "sourceType": "support-ticket",
+        "importance": 0.05,
+        "relevanceScore": 0.05,
+        "timestamp": 600000
+      },
+      {
+        "id": "filler-3",
+        "content": "The agent mentioned general holiday support hours during the call.",
+        "sourceType": "support-ticket",
+        "importance": 0.1,
+        "relevanceScore": 0.1,
+        "timestamp": 700000
+      },
+      {
+        "id": "complaint",
+        "content": "Customer reported that exported invoices were missing line-item tax breakdowns required for their accounting system.",
+        "sourceType": "support-ticket",
+        "importance": 0.9,
+        "relevanceScore": 0.85,
+        "timestamp": 10
+      },
+      {
+        "id": "promise",
+        "content": "We committed to shipping per-line tax breakdowns in CSV exports by the end of this quarter.",
+        "sourceType": "support-ticket",
+        "importance": 0.9,
+        "relevanceScore": 0.85,
+        "timestamp": 20
+      }
+    ]
+  },
+  {
+    "id": "q5",
+    "query": "What version of the auth library are we required to upgrade to, and why?",
+    "inputBudget": 60,
+    "reservedTokens": 20,
+    "requiredFactIds": [
+      "upgrade-target",
+      "upgrade-reason"
+    ],
+    "contextPool": [
+      {
+        "id": "noise-1",
+        "content": "The engineering newsletter this month covered a recap of the last hackathon winners.",
+        "sourceType": "newsletter",
+        "importance": 0.1,
+        "relevanceScore": 0.05,
+        "timestamp": 400000
+      },
+      {
+        "id": "noise-2",
+        "content": "A new coffee subscription perk was announced for all engineering staff.",
+        "sourceType": "newsletter",
+        "importance": 0.05,
+        "relevanceScore": 0.05,
+        "timestamp": 410000
+      },
+      {
+        "id": "upgrade-target",
+        "content": "All services must upgrade to auth-lib v4.2.0 or later.",
+        "sourceType": "security-advisory",
+        "importance": 0.95,
+        "relevanceScore": 0.9,
+        "timestamp": 50
+      },
+      {
+        "id": "upgrade-reason",
+        "content": "Versions prior to 4.2.0 contain a token validation bypass vulnerability (CVE pending) that must be patched.",
+        "sourceType": "security-advisory",
+        "importance": 0.95,
+        "relevanceScore": 0.9,
+        "timestamp": 60
+      }
+    ]
+  },
+  {
+    "id": "q6",
+    "query": "What's the agreed SLA for the enterprise tier and when does it take effect?",
+    "inputBudget": 50,
+    "reservedTokens": 15,
+    "requiredFactIds": [
+      "sla-terms",
+      "sla-effective-date"
+    ],
+    "contextPool": [
+      {
+        "id": "boilerplate-1",
+        "content": "Standard contract boilerplate regarding governing law and jurisdiction clauses.",
+        "sourceType": "contract",
+        "importance": 0.1,
+        "relevanceScore": 0.1,
+        "timestamp": 90
+      },
+      {
+        "id": "boilerplate-2",
+        "content": "Standard contract boilerplate regarding confidentiality obligations of both parties.",
+        "sourceType": "contract",
+        "importance": 0.1,
+        "relevanceScore": 0.1,
+        "timestamp": 95
+      },
+      {
+        "id": "sla-terms",
+        "content": "Enterprise tier SLA: 99.95% uptime guarantee with service credits for breaches.",
+        "sourceType": "contract",
+        "importance": 0.9,
+        "relevanceScore": 0.9,
+        "timestamp": 70
+      },
+      {
+        "id": "sla-effective-date",
+        "content": "This SLA takes effect starting the next billing cycle after contract signature.",
+        "sourceType": "contract",
+        "importance": 0.85,
+        "relevanceScore": 0.85,
+        "timestamp": 80
+      }
+    ]
+  },
+  {
+    "id": "q7",
+    "query": "What's blocking the mobile release and who owns the fix?",
+    "inputBudget": 65,
+    "reservedTokens": 20,
+    "requiredFactIds": [
+      "blocker",
+      "owner"
+    ],
+    "contextPool": [
+      {
+        "id": "standup-1",
+        "content": "Yesterday's standup covered general sprint velocity and burndown chart review.",
+        "sourceType": "chat",
+        "importance": 0.1,
+        "relevanceScore": 0.1,
+        "timestamp": 300000
+      },
+      {
+        "id": "standup-2",
+        "content": "A reminder was shared about updating calendar availability for the holidays.",
+        "sourceType": "chat",
+        "importance": 0.05,
+        "relevanceScore": 0.05,
+        "timestamp": 310000
+      },
+      {
+        "id": "standup-3",
+        "content": "Someone asked about expensing a conference ticket for next month.",
+        "sourceType": "chat",
+        "importance": 0.1,
+        "relevanceScore": 0.05,
+        "timestamp": 320000
+      },
+      {
+        "id": "blocker",
+        "content": "The mobile release is blocked on a crash in the push-notification handler on iOS 18.",
+        "sourceType": "incident-report",
+        "importance": 0.9,
+        "relevanceScore": 0.9,
+        "timestamp": 100
+      },
+      {
+        "id": "owner",
+        "content": "The fix is owned by the mobile platform team, targeting a patch by end of week.",
+        "sourceType": "incident-report",
+        "importance": 0.85,
+        "relevanceScore": 0.85,
+        "timestamp": 110
+      }
+    ]
+  },
+  {
+    "id": "q8",
+    "query": "What pricing change was approved for the Pro plan and when does it start?",
+    "inputBudget": 56,
+    "reservedTokens": 15,
+    "requiredFactIds": [
+      "pricing-change",
+      "pricing-start-date"
+    ],
+    "contextPool": [
+      {
+        "id": "meeting-note-1",
+        "content": "The meeting opened with a review of last quarter's marketing campaign performance.",
+        "sourceType": "meeting-notes",
+        "importance": 0.1,
+        "relevanceScore": 0.1,
+        "timestamp": 200000
+      },
+      {
+        "id": "meeting-note-2",
+        "content": "There was a tangent about rebranding the company blog's header image.",
+        "sourceType": "meeting-notes",
+        "importance": 0.05,
+        "relevanceScore": 0.05,
+        "timestamp": 210000
+      },
+      {
+        "id": "pricing-change",
+        "content": "Approved: the Pro plan monthly price increases from $29 to $35.",
+        "sourceType": "meeting-notes",
+        "importance": 0.9,
+        "relevanceScore": 0.9,
+        "timestamp": 150
+      },
+      {
+        "id": "pricing-start-date",
+        "content": "The new Pro plan pricing takes effect for all new signups starting next month; existing customers are grandfathered for 6 months.",
+        "sourceType": "meeting-notes",
+        "importance": 0.9,
+        "relevanceScore": 0.85,
+        "timestamp": 160
+      }
+    ]
+  },
+  {
+    "id": "q9_decoy",
+    "query": "Which vendor did we finally sign with for cloud hosting?",
+    "inputBudget": 75,
+    "reservedTokens": 15,
+    "requiredFactIds": [
+      "final-vendor"
+    ],
+    "contextPool": [
+      {
+        "id": "decoy-proposal",
+        "content": "Draft proposal under consideration: AWS was floated early on as a possible vendor for our cloud hosting needs.",
+        "sourceType": "chat",
+        "importance": 0.4,
+        "relevanceScore": 0.85,
+        "timestamp": 100
+      },
+      {
+        "id": "filler-1",
+        "content": "The vendor evaluation spreadsheet was shared in the team drive for anyone who wants to review the scoring criteria.",
+        "sourceType": "chat",
+        "importance": 0.1,
+        "relevanceScore": 0.2,
+        "timestamp": 200
+      },
+      {
+        "id": "filler-2",
+        "content": "A procurement reminder went out about submitting expense reports before the end of the fiscal quarter.",
+        "sourceType": "chat",
+        "importance": 0.05,
+        "relevanceScore": 0.05,
+        "timestamp": 300
+      },
+      {
+        "id": "final-vendor",
+        "content": "Final decision: after the full vendor review, we signed with Google Cloud for cloud hosting, finalized this week.",
+        "sourceType": "decision-log",
+        "importance": 0.95,
+        "relevanceScore": 0.9,
+        "timestamp": 50000
+      }
+    ]
+  },
+  {
+    "id": "q10_tiebreak",
+    "query": "What is our current on-call escalation path?",
+    "inputBudget": 37,
+    "reservedTokens": 5,
+    "requiredFactIds": [
+      "escalation-path"
+    ],
+    "contextPool": [
+      {
+        "id": "decoy-old-path",
+        "content": "Deprecated escalation path: page the on-call engineer via the old pager system, then escalate to the team lead after fifteen minutes.",
+        "sourceType": "runbook",
+        "importance": 0.6,
+        "relevanceScore": 0.45,
+        "timestamp": 1000
+      },
+      {
+        "id": "escalation-path",
+        "content": "Current escalation path: the on-call engineer is paged immediately, and the incident commander is auto-paged if unacknowledged within five minutes.",
+        "sourceType": "runbook",
+        "importance": 0.6,
+        "relevanceScore": 0.75,
+        "timestamp": 900000
+      },
+      {
+        "id": "filler-1",
+        "content": "The runbook also links to the team's shared calendar for on-call rotation scheduling.",
+        "sourceType": "runbook",
+        "importance": 0.1,
+        "relevanceScore": 0.1,
+        "timestamp": 500
+      }
+    ]
+  },
+  {
+    "id": "q11_infeasible",
+    "query": "What are all three steps of the deployment rollback procedure?",
+    "inputBudget": 55,
+    "reservedTokens": 10,
+    "requiredFactIds": [
+      "step-1",
+      "step-2",
+      "step-3"
+    ],
+    "contextPool": [
+      {
+        "id": "step-1",
+        "content": "Step 1 of rollback: scale the new deployment down to zero replicas to immediately stop routing traffic to it.",
+        "sourceType": "runbook",
+        "importance": 0.9,
+        "relevanceScore": 0.9,
+        "timestamp": 10
+      },
+      {
+        "id": "step-2",
+        "content": "Step 2 of rollback: restore the previous stable container image tag using the deployment pipeline's rollback command.",
+        "sourceType": "runbook",
+        "importance": 0.9,
+        "relevanceScore": 0.9,
+        "timestamp": 20
+      },
+      {
+        "id": "step-3",
+        "content": "Step 3 of rollback: run the full post-rollback health check suite and notify the on-call channel once every check passes.",
+        "sourceType": "runbook",
+        "importance": 0.9,
+        "relevanceScore": 0.9,
+        "timestamp": 30
+      },
+      {
+        "id": "filler-1",
+        "content": "The runbook footer notes this document was last reviewed by the platform team at the start of the quarter.",
+        "sourceType": "runbook",
+        "importance": 0.1,
+        "relevanceScore": 0.1,
+        "timestamp": 5
+      }
+    ]
+  }
+]
