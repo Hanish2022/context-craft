@@ -1,0 +1,14 @@
+{
+  "name": "context-craft",
+  "description": "ContextCraft: a Claude Code skill for auditing and fixing LLM context pipelines, backed by a zero-cost context-selection engine.",
+  "owner": {
+    "name": "Hanish2022"
+  },
+  "plugins": [
+    {
+      "name": "contextcraft",
+      "source": "./",
+      "description": "Audit and improve how an LLM app or agent selects, prioritizes, and trims context before it reaches a model."
+    }
+  ]
+}

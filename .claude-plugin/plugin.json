@@ -1,0 +1,14 @@
+{
+  "name": "contextcraft",
+  "displayName": "ContextCraft",
+  "version": "0.1.0",
+  "description": "Audit and improve how an LLM app or agent selects, prioritizes, and trims context before it reaches a model -- backed by a zero-cost, token-budgeted, importance-weighted selection engine.",
+  "author": {
+    "name": "Hanish2022"
+  },
+  "homepage": "https://github.com/Hanish2022/context-craft",
+  "repository": "https://github.com/Hanish2022/context-craft",
+  "license": "MIT",
+  "keywords": ["context-engineering", "llm", "rag", "prompt-engineering", "token-budget"],
+  "skills": ["./.claude/skills/contextcraft"]
+}
