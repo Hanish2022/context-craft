@@ -122,46 +122,43 @@ benchmark/        the zero-cost mechanical benchmark + the optional real-LLM eva
   runLLMEval.ts      optional: sends both strategies' context to Gemini, grades the answer
   reportLLM.ts       prints the real-model comparison table
 .claude/skills/contextcraft/   the packaged Claude Skill (see above)
+.claude-plugin/                plugin.json + marketplace.json, so the skill installs as a plugin
 ```
 
-## Installing and using the ContextCraft skill elsewhere
+## Installing the ContextCraft skill
 
-There's no `npm install` for this — a Claude Skill isn't a package published to
-a registry, it's just files that Claude Code reads from a `.claude/skills/`
-directory. Here's what actually works today:
+ContextCraft is a Claude Code **plugin** (`.claude-plugin/plugin.json` +
+`.claude-plugin/marketplace.json`), so it installs with Claude Code's own
+built-in plugin system — no `git clone`, no `npm install`, no third-party
+installer:
 
-**Use it on this repo (simplest)**
+```
+/plugin install contextcraft --marketplace Hanish2022/context-craft
+```
+
+(Claude Code 2.1.275+. On an older version, run the two steps separately:
+`/plugin marketplace add Hanish2022/context-craft` then
+`/plugin install contextcraft@context-craft`.) This also works from your
+shell: `claude plugin marketplace add Hanish2022/context-craft` then
+`claude plugin install contextcraft@context-craft`.
+
+This clones the repo into Claude Code's own plugin cache for you and installs
+it for your account (`scope: user`), so it's available in every project from
+then on — verified by installing it from a completely unrelated directory and
+confirming it triggers correctly with no reference to this repo at all. Once
+installed, just describe your problem naturally ("my agent keeps forgetting
+earlier decisions," "our prompts are too expensive," "the right doc gets
+retrieved but the answer's still wrong") — no need to name the skill.
+
+**Working on this repo directly instead** (to modify the engine itself):
 ```bash
 git clone git@github.com:Hanish2022/context-craft.git
 cd context-craft
 npm install
 ```
-Then, working inside this directory in Claude Code, just describe your
-problem naturally ("my agent keeps forgetting earlier decisions," "our
-prompts are too expensive," etc.) — Claude discovers `.claude/skills/
-contextcraft/` automatically and can diagnose your code and run the engine's
-scripts.
-
-**Point it at a different project**
-Clone this repo somewhere (e.g. `~/tools/context-craft`), `npm install` it
-there, then run its scripts directly against a data file you build from your
-own project's context items, in the input shapes documented in
-`.claude/skills/contextcraft/SKILL.md`:
-```bash
-npx tsx ~/tools/context-craft/.claude/skills/contextcraft/scripts/assemble.ts path/to/your-input.json
-npx tsx ~/tools/context-craft/.claude/skills/contextcraft/scripts/compare.ts  path/to/your-dataset.json
-```
-Or just ask Claude (pointed at your project, with this repo's path mentioned)
-to use the skill against your code — it'll read `SKILL.md` and drive the
-scripts itself.
-
-**Known limitation:** the skill's scripts use relative imports into this
-repo's own `src/` and `benchmark/`, so right now they only work from inside a
-full clone of this repo — you can't yet copy just the `.claude/skills/
-contextcraft/` folder into an unrelated project and have it work standalone.
-Publishing the engine as a real installable package (so the scripts import
-`context-craft` as a dependency instead of relative paths) would be the
-natural next step if broader portability is ever needed.
+Claude Code also auto-discovers `.claude/skills/contextcraft/` as a
+project-local skill when you're working inside a clone, independent of the
+plugin install above.
 
 ## Running it
 
