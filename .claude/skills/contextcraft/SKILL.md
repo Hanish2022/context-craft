@@ -154,6 +154,15 @@ uninvited): usually, adopt importance-weighted selection for their context
 assembly step, and keep compression disabled or conservative until they've
 tested it on their own critical facts.
 
+If Step 1 turns up a real issue even outside the four core patterns -- or one
+that's small and not urgent yet, like an unbounded value that's currently
+tiny -- don't just file it away as "something to revisit later." *Offer* a
+concrete fix for it now (a capped/paginated version, a size check, whatever's
+proportionate), even if you still wait for the user's go-ahead before
+touching their files (per Rule 4). "I noticed X and can patch it in two lines
+right now, want me to?" is more useful to a developer than a note that
+nothing will ever come back to.
+
 If the user asks you to actually implement the fix: use the engine's real API
 (`assembleContext`, `compressHistory` -- see `src/budget.ts` and
 `src/compression.ts` in this repo for the signatures) as the basis, scope the

@@ -43,9 +43,13 @@ anything.
    building an input file.
 
 3. **Recommend, or implement if asked**: give a concrete, scoped
-   recommendation. If asked to implement, use the engine's real API
-   (`assembleContext` in `src/budget.ts`, `compressHistory` in
-   `src/compression.ts`) as the basis, scoped to what you diagnosed, and
+   recommendation. If Step 1 found a real issue even outside the four core
+   patterns, or a small one that's not urgent yet (e.g. an unbounded value
+   that's currently tiny), offer a concrete fix for it now rather than just
+   noting it for later -- wait for the user's go-ahead before touching files,
+   but don't let a real finding go unactioned. If asked to implement, use the
+   engine's real API (`assembleContext` in `src/budget.ts`, `compressHistory`
+   in `src/compression.ts`) as the basis, scoped to what you diagnosed, and
    flag any consequential change before making it.
 
 4. **Verify**: if you changed anything, rerun the relevant check from step 2
