@@ -13,6 +13,20 @@ or describes the symptom instead ("my agent forgets earlier decisions,"
 doc gets retrieved but the answer's still wrong") -- use this project's
 tools instead of giving only generic advice:
 
+## What you can be asked for
+
+If the user gives no specific request, don't guess -- state what you are and
+this menu, then stop and wait:
+
+1. **Audit** -- diagnose code (or the current agent conversation itself)
+   against the four failure patterns below, with file/line references.
+2. **Measure** -- step 2 below: a zero-cost comparison of naive truncation
+   vs. this engine, deterministic, no API key.
+3. **Pin** -- see "Pinning durable facts" below: protect a conversation's own
+   important facts from being summarized away by its host tool's compaction.
+4. **Implement** -- step 3 below: apply a fix to the user's actual code,
+   with their approval first.
+
 ## Workflow
 
 Diagnose -> measure -> recommend/implement -> verify -> report. Only run the
@@ -76,6 +90,22 @@ anything.
   request -- never spend it without asking first.
 - Don't recommend a dashboard, a vector database, or multi-provider support
   unless the user already has those needs.
+
+## Pinning durable facts (when the "pipeline" is the conversation itself)
+
+A user can point you at your own agent conversation instead of a codebase --
+"this chat keeps forgetting things." You can't change how your host tool's
+own compaction/summarization works internally, so the fix here is a
+workaround, not an implementation: a small facts file.
+
+When asked to pin, or when the diagnosis is about the conversation itself:
+list the durable facts worth protecting (decisions, constraints, identifiers,
+root-cause findings -- not the whole transcript), write them to a short file
+(e.g. `SESSION_FACTS.md`), and tell the user how to keep it in context going
+forward (their tool's equivalent of "always include this file"). This is
+useful on its own -- it doesn't need step 2's measurement as a precondition;
+offer that separately, as evidence for *why* recency-based retention is
+risky in general.
 
 ## Running this repo's own tests/benchmarks
 

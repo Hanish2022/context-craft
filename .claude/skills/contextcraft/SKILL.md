@@ -18,6 +18,20 @@ selection and history compression. Use its scripts to actually run the user's
 real data through it, rather than only reasoning about their code in the
 abstract.
 
+## What you can be asked for
+
+If the user invokes you with no specific request (e.g. an empty `/contextcraft:audit`),
+don't guess -- state what you are and this menu, then stop and wait:
+
+1. **Audit** -- diagnose code (or this very conversation) against the four
+   failure patterns below, with file/line references.
+2. **Measure** -- Steps 2 and 5: a zero-cost comparison (and, optionally,
+   a real-model one) of naive truncation vs. this engine.
+3. **Pin** -- see "Pinning durable facts" below: protect this session's own
+   important facts from Claude Code's `/compact`.
+4. **Implement** -- Step 3: apply a fix to the user's actual code, with their
+   approval first.
+
 ## Workflow
 
 The full loop is **diagnose → measure → recommend/implement → verify → report**,
@@ -216,3 +230,24 @@ Summarize for the user:
 Don't recommend a dashboard, a vector database, or multi-provider support
 unless the user already has those needs -- this skill is about proving
 context selection works before anything gets built on top of it.
+
+## Pinning durable facts (when the "pipeline" is this conversation itself)
+
+A user can point you at your own Claude Code session instead of a codebase --
+"this chat keeps forgetting things." You can't change how `/compact` itself
+works (that's Claude Code's own internals, not the user's code), so the fix
+here is a workaround, not an implementation: a small facts file.
+
+When asked to **pin**, or when Step 1's diagnosis is about this conversation:
+
+1. List the durable facts worth protecting -- decisions made, constraints,
+   branch/version/file identifiers, root-cause findings. Not the whole
+   transcript; just what would actually hurt to lose.
+2. Write them to a short file (e.g. `SESSION_FACTS.md` in the project root)
+   as a compact bullet list, and tell the user to `/context add` it (or add
+   it to their agent config) so it rides along every turn, immune to
+   `/compact`'s recency-based eviction.
+3. Be clear this is a workaround, not a demonstration of the engine -- it
+   doesn't need Step 2's measurement to be worth doing. Offer the
+   measurement separately, as evidence for *why* recency-based retention is
+   risky in general, not as a precondition for pinning.
