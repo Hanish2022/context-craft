@@ -78,4 +78,19 @@ describe('assembleContext', () => {
 
     expect(result.selected.map((i) => i.id)).toEqual(['critical'])
   })
+
+  it('packs by value-per-token (density) in the non-pinned tier, not raw score', () => {
+    // A has the highest raw score but is expensive; B/C/D score lower individually
+    // but have better value-per-token, and three of them fit in the same budget
+    // that one A would consume. None of these are pinned (importance < 0.8).
+    const a = item({ id: 'A', content: 'content A', importance: 0.7, relevanceScore: 0.9, tokenEstimate: 90 })
+    const b = item({ id: 'B', content: 'content B', importance: 0.3, relevanceScore: 0.5, tokenEstimate: 30 })
+    const c = item({ id: 'C', content: 'content C', importance: 0.3, relevanceScore: 0.5, tokenEstimate: 30 })
+    const d = item({ id: 'D', content: 'content D', importance: 0.3, relevanceScore: 0.5, tokenEstimate: 30 })
+
+    const result = assembleContext([a, b, c, d], { inputBudget: 100, reservedTokens: 0 })
+
+    expect(result.selected.map((i) => i.id).sort()).toEqual(['B', 'C', 'D'])
+    expect(result.excluded).toEqual([{ id: 'A', reason: 'over_budget' }])
+  })
 })

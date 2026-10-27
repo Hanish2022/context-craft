@@ -47,9 +47,14 @@ export function assembleContext(
   const pinned = scored
     .filter((s) => s.item.importance >= pinThreshold)
     .sort((a, b) => b.score - a.score)
+  // Non-pinned items are a knapsack problem: pack by value-per-token, not raw
+  // score, so a single high-score/high-cost item doesn't crowd out several
+  // smaller items that deliver more total value for the tokens spent.
+  const density = (s: (typeof scored)[number]) =>
+    s.score / Math.max(1, s.item.tokenEstimate ?? 1)
   const rest = scored
     .filter((s) => s.item.importance < pinThreshold)
-    .sort((a, b) => b.score - a.score)
+    .sort((a, b) => density(b) - density(a))
 
   const selected: ContextItem[] = []
   let used = 0
